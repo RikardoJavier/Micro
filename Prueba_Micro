@@ -1,0 +1,79 @@
+//////////////////////
+//Declaracion de Pines
+//////////////////////
+const int LED1=2;
+const int LED2=3;
+const int PB =4;
+///////////////////
+//Variables
+///////////////////
+int Estado;
+int TDelay =0;//Tiempo en milisegundos
+///////////////
+//temporizador
+///////////////
+
+void setup()//Clase o Estructura
+{
+  pinMode(LED1,OUTPUT);
+  pinMode(LED2,OUTPUT);
+  pinMode(PB, INPUT);
+}
+void loop()//Equvalente a un main en C
+{
+	Maq_Estado_Verde(); /////Led Verde
+}
+
+void Maq_Estado_Verde()
+{
+   ///////////////
+   /////Variables
+  ////////////////
+    int Pulsador = digitalRead(PB);
+  	int T = TDelay;
+  	int i=0;
+	switch(Estado)
+    {
+    	case(0):
+            ////Salidas
+            ////LED APAGADO
+      		digitalWrite(LED2,0);
+      			///Condicionales
+              if (Pulsador == 0)
+            	{  
+              	//Esperando pulsacion.
+            		Estado = 0;
+            	}
+      		  if (Pulsador == 1)
+                {
+                //Estado Encendido
+              		Estado = 1;
+                	T=0;//Resteo el temporizador.
+              	}
+      		
+      		break;
+      	case(1):
+      	////Salidas
+        ////LED Encendido
+      		digitalWrite(LED2,1);
+      ///Condicionales
+              if (T<4000)
+            	{  
+              		//Estado encendido.
+            		Estado = 1;
+                while (i<=4000)
+                {
+                	i+=1000;
+                }
+                T=i;
+            	}
+      		  if (T>=4000)
+                {
+                	//Vuelvo a Esperar
+              		Estado = 0;
+              	}
+      		break;
+    
+    }
+  
+}
